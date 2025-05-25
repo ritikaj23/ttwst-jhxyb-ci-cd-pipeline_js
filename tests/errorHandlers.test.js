@@ -18,18 +18,18 @@ describe('Error Handlers', () => {
   beforeEach(() => {
     // Reset mocks
     jest.clearAllMocks()
-    
+
     // Mock Express request and response objects
     req = {
       method: 'GET',
       path: '/test'
     }
-    
+
     res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn()
     }
-    
+
     next = jest.fn()
   })
 
@@ -37,10 +37,10 @@ describe('Error Handlers', () => {
     it('should return 404 with correct error message', () => {
       // Call the handler
       errorHandlers.notFound(req, res, next)
-      
+
       // Check that logger was called
       expect(logger.warn).toHaveBeenCalledWith('Resource not found: GET /test')
-      
+
       // Check response
       expect(res.status).toHaveBeenCalledWith(status.HTTP_404_NOT_FOUND)
       expect(res.json).toHaveBeenCalledWith({
@@ -57,9 +57,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_400_BAD_REQUEST,
         message: 'Bad request error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Bad request error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_400_BAD_REQUEST)
       expect(res.json).toHaveBeenCalledWith({
@@ -74,9 +74,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_401_UNAUTHORIZED,
         message: 'Unauthorized error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Unauthorized error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_401_UNAUTHORIZED)
       expect(res.json).toHaveBeenCalledWith({
@@ -91,9 +91,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_403_FORBIDDEN,
         message: 'Forbidden error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Forbidden error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_403_FORBIDDEN)
       expect(res.json).toHaveBeenCalledWith({
@@ -108,9 +108,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_404_NOT_FOUND,
         message: 'Not found error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Not found error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_404_NOT_FOUND)
       expect(res.json).toHaveBeenCalledWith({
@@ -125,9 +125,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_405_METHOD_NOT_ALLOWED,
         message: 'Method not allowed error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Method not allowed error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_405_METHOD_NOT_ALLOWED)
       expect(res.json).toHaveBeenCalledWith({
@@ -142,9 +142,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_409_CONFLICT,
         message: 'Conflict error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Conflict error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_409_CONFLICT)
       expect(res.json).toHaveBeenCalledWith({
@@ -159,9 +159,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
         message: 'Unsupported media type error'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.warn).toHaveBeenCalledWith('Unsupported media type error')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
       expect(res.json).toHaveBeenCalledWith({
@@ -177,9 +177,9 @@ describe('Error Handlers', () => {
         message: 'Internal server error',
         stack: 'Error stack trace'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.error).toHaveBeenCalledWith('Internal server error')
       expect(logger.error).toHaveBeenCalledWith('Error stack trace')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -195,9 +195,9 @@ describe('Error Handlers', () => {
         message: 'Unknown error',
         stack: 'Error stack trace'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.error).toHaveBeenCalledWith('Unknown error')
       expect(logger.error).toHaveBeenCalledWith('Error stack trace')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -213,9 +213,9 @@ describe('Error Handlers', () => {
         statusCode: status.HTTP_500_INTERNAL_SERVER_ERROR,
         stack: 'Error stack trace'
       }
-      
+
       errorHandlers.errorHandler(err, req, res, next)
-      
+
       expect(logger.error).toHaveBeenCalledWith('Internal Server Error')
       expect(logger.error).toHaveBeenCalledWith('Error stack trace')
       expect(res.status).toHaveBeenCalledWith(status.HTTP_500_INTERNAL_SERVER_ERROR)
